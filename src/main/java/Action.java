@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.sql.SQLException;
@@ -128,8 +129,16 @@ public class Action extends Model{
         String id = "";
         String check = "";
         try{
-            FileInputStream file = new FileInputStream("src/"+path);
-            FileWriter write = new FileWriter("src/"+path, true);
+            String dir = "C:/TGS/.timetable/.data/.files";
+            File createFile = new File(dir);
+            createFile.mkdirs();
+
+            createFile = new File(dir+"/"+path);
+            createFile.createNewFile();
+            createFile.setWritable(true);
+
+            FileInputStream file = new FileInputStream(dir+"/"+path);
+            FileWriter write = new FileWriter(dir+"/"+path, true);
 
             int r = file.read();
             boolean bool = true;
@@ -150,7 +159,8 @@ public class Action extends Model{
             write.append(id).append("\n");
             write.close();
             file.close();
-        }catch(Exception ex){/**/}
+        }catch(Exception ex){
+            ex.printStackTrace();}
         return id;
     }
     void alert(JPanel page, Color color, String message, int[] pos){

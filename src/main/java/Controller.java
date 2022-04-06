@@ -358,6 +358,7 @@ public class Controller extends Design implements Methods {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        db.connect();
         int j = 0;
         for (JButton btn: sidebtn) {
             if(btn == e.getSource())
@@ -390,6 +391,7 @@ public class Controller extends Design implements Methods {
                 if (!typ.equalsIgnoreCase(".....")){
                     cs = "practical";
                 }
+                System.out.println("key = "+id);
                 if (
                         db.dbAction("INSERT INTO course VALUES('0', '"+courseInput[0].getText().toUpperCase()+"', '"+courseInput[1].getText().toUpperCase()+"', '"+id+"', '"+lev+"', '0', '"+sem+"', '"+cs+"', '"+super.select[2].getSelectedItem().toString()+"')")
                         &&
@@ -470,10 +472,10 @@ public class Controller extends Design implements Methods {
         if (e.getSource() == addLect) {
             if (action.validate(lectInput) && lectInput[1].getText().length() == 11){
                 if (db.dbAction("INSERT INTO lecturers VALUES('0', '"+lectInput[0].getText().toUpperCase()+"', '"+lectInput[1].getText()+"' ,'"+action.uniqueID("lectID.tgs")+"')")) {
-                    action.alert(lecturers, color.get("green"),"Room Added", new int[]{770, 5, 350, 60});
+                    action.alert(lecturers, color.get("green"),"Lecturer Added", new int[]{770, 5, 350, 60});
                     lectInput[0].setText("");
                     lectInput[1].setText("");
-                }else action.alert(lecturers, color.get("red"),"Room Not Added", new int[]{770, 5, 350, 60});
+                }else action.alert(lecturers, color.get("red"),"Lecturer Not Added", new int[]{770, 5, 350, 60});
 
             }
             else action.alert(lecturers, color.get("red"),"Incomplete/Invalid details", new int[]{770, 5, 350, 60});

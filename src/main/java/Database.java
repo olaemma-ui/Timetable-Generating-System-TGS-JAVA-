@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -75,8 +73,8 @@ public class Database extends Model{
             label.setText("Fail to Connect");
             label.setForeground(color.get("red"));
             load.add(label);
-//            Thread.sleep(2000);
-//            index.dispose();
+            Thread.sleep(2000);
+            index.dispose();
         }
     }
     void connect (){
