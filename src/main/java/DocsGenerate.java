@@ -19,7 +19,7 @@ public class DocsGenerate {
         }
 
         String sf = null;
-        if (!file.equals(null)){
+        if (file != null){
             sf = file.getAbsolutePath();
         }
         return sf;

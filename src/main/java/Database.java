@@ -54,8 +54,14 @@ public class Database extends Model{
             index.setLocationRelativeTo(null);
             index.setUndecorated(true);
             index.setVisible(true);
+
+		//Host: sql8.freesqldatabase.com
+		//Database name: sql8507357
+		//Database user: sql8507357
+		//Database password: Y5kLC7Ge8r
+		//Port number: 3306
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = String.format("jdbc:mysql://%s:%d?user=%s&password=%s",  "mysql-74476-0.cloudclusters.net", 18667, "admin", "5p4eYmOQ");
+            String url = String.format("jdbc:mysql://%s:%d?user=%s&password=%s",  "localhost", 3306, "root", "");
             con = DriverManager.getConnection(url);
             query = con.createStatement();
             query.executeUpdate("use timetable");
@@ -68,6 +74,7 @@ public class Database extends Model{
             for (int j = 0; j < 5; j++) {
                 y[j] = 120;
             }
+            ex.printStackTrace();
             timer.stop();
             load.repaint();
             label.setText("Fail to Connect");
@@ -80,7 +87,7 @@ public class Database extends Model{
     void connect (){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = String.format("jdbc:mysql://%s:%d?user=%s&password=%s",  "mysql-74476-0.cloudclusters.net", 18667, "admin", "5p4eYmOQ");
+            String url = String.format("jdbc:mysql://%s:%d?user=%s&password=%s",  "localhost", 3306, "root", "");
             con = DriverManager.getConnection(url);
             query = con.createStatement();
             query.executeUpdate("use timetable");

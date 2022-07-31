@@ -98,16 +98,15 @@ public class Controller extends Design implements Methods {
                 lect_id.add(result.getString("lectID"));
                 i++;
             }
+            //create TABLE generate( id int not null AUTO_INCREMENT, courseID varchar(50) not null, lectId varchar(50) not null, semester varchar(50) not null, PRIMARY KEY(id) )
 
             select = "SELECT * FROM ((generate INNER JOIN lecturers on lecturers.lectID = generate.lectID) INNER JOIN course ON generate.courseID = course.courseID) WHERE generate.semester = '"+timeTableSelect[0].getSelectedItem().toString()+"'";
             result = db.query.executeQuery(select);
             while (result.next()) {
                 String  li = result.getString("course_code")+"\n"+result.getString("name");
-//                if (!result.getString("room").equalsIgnoreCase("....."))
-//                    li+="\n RM: "+ result.getString("room");
+
                 if (result.getString("level").equalsIgnoreCase("ND 1")) {
                     nd1List.add(li);
-                    System.out.println(li);
                 }
                 if (result.getString("level").equalsIgnoreCase("ND 2")) {
                     nd2List.add(li);
@@ -120,8 +119,8 @@ public class Controller extends Design implements Methods {
                 }
             }
 
-        }catch (Exception ex){/***/
-        ex.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
         for (JComboBox s: super.select) {
             s.repaint();
@@ -283,7 +282,6 @@ public class Controller extends Design implements Methods {
 
         for (LinkedList list: levels) {
             String lect = "";
-            int loop = 0;
             while(!(n == list.size())) {
                 loop:
                 for (int i = 0; i < list.size(); i++) {
@@ -323,11 +321,10 @@ public class Controller extends Design implements Methods {
                                 if (!room.equalsIgnoreCase(nd1DataRoom[d][h]) && !room.equalsIgnoreCase(nd2DataRoom[d][h]) && !room.equalsIgnoreCase(hnd1DataRoom[d][h]) && !room.equalsIgnoreCase(hnd2DataRoom[d][h])){
                                     RoomDatas[index][d][h] = room;
                                     Datas[index][d][h]+="\n"+room;
-                                    roomGen = false;
                                 }
                             }
                             n++;
-                            break loop;
+                            break;
                         }
                     }
                 }
@@ -344,7 +341,7 @@ public class Controller extends Design implements Methods {
         String file = docsGenerate.chooseFile(index);
         System.out.println(file);
         if (!file.equalsIgnoreCase("empty")){
-            docsGenerate.generateDocument(file, arr, index);
+            docsGenerate.generateDocument(file+".docx", arr, index);
         }
     }
 
@@ -392,6 +389,9 @@ public class Controller extends Design implements Methods {
                     cs = "practical";
                 }
                 System.out.println("key = "+id);
+                System.out.println("level = "+lev);
+                System.out.println("course type = "+cs);
+                System.out.println("semester = "+sem);
                 if (
                         db.dbAction("INSERT INTO course VALUES('0', '"+courseInput[0].getText().toUpperCase()+"', '"+courseInput[1].getText().toUpperCase()+"', '"+id+"', '"+lev+"', '0', '"+sem+"', '"+cs+"', '"+super.select[2].getSelectedItem().toString()+"')")
                         &&
@@ -434,7 +434,7 @@ public class Controller extends Design implements Methods {
         if (e.getSource() == addClass ){
             if (action.validate(roomInput)){
                 String typ = roomType.getSelectedItem().toString();
-                if (db.dbAction("INSERT INTO room VALUES('0', '"+roomInput[0].getText().toUpperCase()+"', '"+action.uniqueID("roomID.tgs")+"', '"+typ+"',  '"+roomInput[1].getText().toUpperCase()+"')")) {
+                if (db.dbAction("INSERT INTO room VALUES('0', '"+roomInput[0].getText().toUpperCase()+"', '"+action.uniqueID("roomID.tgs")+"', '"+typ+"', '"+roomInput[1].getText().toUpperCase()+"')")) {
                     action.alert(rooms, color.get("green"),"Room Added", new int[]{770, 5, 350, 60});
                     roomInput[0].setText("");
                     roomInput[1].setText("");
